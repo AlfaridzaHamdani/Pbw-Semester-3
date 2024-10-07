@@ -27,6 +27,8 @@
 </head>
 
 <body>
+    <a href="/registration">Tambah Data</a>
+
     <h2>Data Registrasi Penumpang</h2>
 
     <table>
@@ -45,12 +47,13 @@
                     <td>{{ $ticket->tgl_berangkat }}</td>
                     <td>{{ $ticket->tujuan }}</td>
                     <td>{{ $ticket->asal }}</td>
-                    <td>{{ $ticket->nama_penumpang }}</td>
+                    <td>{{ $ticket->user->name }}</td>
                     <td>{{ $ticket->no_kursi }}</td>
                 </tr>
             @endforeach
         </tbody>
     </table>
+
 
 </body>
 

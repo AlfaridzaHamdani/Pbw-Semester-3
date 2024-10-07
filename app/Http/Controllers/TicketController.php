@@ -13,7 +13,8 @@ class TicketController extends Controller
      */
     public function index()
     {
-        return view('register');
+        $users = User::all();
+        return view('register', compact('users'));
     }
 
     /**
@@ -40,10 +41,9 @@ class TicketController extends Controller
      */
     public function show(Ticket $ticket)
     {
-        $tickets = Ticket::all();
+        $tickets = Ticket::with('user')->get();
         return view('result', compact('tickets'));
     }
-
 
 
     /**
@@ -68,10 +68,5 @@ class TicketController extends Controller
     public function destroy(Ticket $ticket)
     {
         //
-    }
-
-    public function relasiOneToOne()
-    {
-        return $data = User::with('phone')->get();
     }
 }

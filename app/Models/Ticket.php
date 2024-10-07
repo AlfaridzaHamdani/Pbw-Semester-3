@@ -8,6 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Ticket extends Model
 {
     use HasFactory;
-    protected $table = 'ticket_tables';
+    protected $table = 'ticket';
     protected $primaryKey = 'id';
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

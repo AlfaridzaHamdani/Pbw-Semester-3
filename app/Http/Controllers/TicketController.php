@@ -13,7 +13,7 @@ class TicketController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = User::with('ticket')->get();
         return view('register', compact('users'));
     }
 
@@ -30,11 +30,28 @@ class TicketController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->all();
-        unset($data['_token']);
-        Ticket::insert($data);
-        return redirect('/result');
+
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'tgl_berangkat' => 'required|date',
+            'no_kursi' => 'required|max:10',
+            'asal' => 'required|max:255',
+            'tujuan' => 'required|string|max:255'
+        ]);
+
+        try {
+            $data = $request->all();
+            unset($data['_token']);
+
+            Ticket::insert($data);
+
+            return redirect('/result')->with('success', 'Data berhasil disimpan');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => 'Data gagal disimpan']);
+        }
     }
+
+
 
     /**
      * Display the specified resource.
